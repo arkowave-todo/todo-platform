@@ -1,0 +1,67 @@
+version: 1
+filesystem_policy:
+  include_workdir: true
+  read_only:
+    - /bin
+    - /usr
+    - /lib
+    - /proc
+    - /dev/urandom
+    - /etc
+    - /var/log
+  read_write:
+    - /tmp
+    - /dev/null
+landlock:
+  compatibility: best_effort
+network_policies:
+  npm_registry:
+    name: npm_registry
+    endpoints:
+      - host: registry.npmjs.org
+        port: 443
+        protocol: rest
+        enforcement: enforce
+        access: read-only
+    binaries:
+      - path: /usr/local/bin/node
+      - path: /usr/bin/curl
+  claude_code:
+    name: claude_code
+    endpoints:
+      - host: api.anthropic.com
+        port: 443
+        protocol: rest
+        enforcement: enforce
+        access: read-write
+      - host: claude.ai
+        port: 443
+        protocol: rest
+        enforcement: enforce
+        access: read-write
+      - host: platform.claude.com
+        port: 443
+        protocol: rest
+        enforcement: enforce
+        access: read-write
+    binaries:
+      - path: /usr/local/lib/node_modules/@anthropic-ai/claude-code/bin/claude.exe
+  github_repository_push:
+    name: github-repository-push
+    endpoints:
+      - host: github.com
+        port: 443
+        protocol: rest
+        enforcement: enforce
+        rules:
+          - allow:
+              method: GET
+              path: "/arkowave-todo/todo-api.git/info/refs*"
+          - allow:
+              method: POST
+              path: "/arkowave-todo/todo-api.git/git-upload-pack"
+          - allow:
+              method: POST
+              path: "/arkowave-todo/todo-api.git/git-receive-pack"
+    binaries:
+      - path: /usr/bin/git
