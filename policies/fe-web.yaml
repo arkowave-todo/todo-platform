@@ -23,6 +23,7 @@ network_policies:
         protocol: rest
         enforcement: enforce
         access: read-only
+        allow_encoded_slash: true
     binaries:
       - path: /usr/local/bin/node
       - path: /usr/bin/curl
