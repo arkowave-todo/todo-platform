@@ -7,7 +7,7 @@ REPO=$2
 POLICY=$3
 PROVIDER=${4:-}
 ORG=arkowave-todo
-IMAGE=localhost/todo-sandbox-base:0.2
+IMAGE=localhost/todo-sandbox-base:0.3
 
 args=(--name "$NAME" --from "$IMAGE" --policy "$POLICY" --no-auto-providers --detach)
 if [ -n "$PROVIDER" ]; then
