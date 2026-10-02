@@ -1,7 +1,7 @@
 FROM public.ecr.aws/docker/library/node:22-bookworm-slim
 
 RUN apt-get update \
- && apt-get install -y --no-install-recommends ca-certificates curl git iproute2 \
+ && apt-get install -y --no-install-recommends ca-certificates curl git iproute2 jq python3 python-is-python3 \
  && rm -rf /var/lib/apt/lists/*
 
 RUN npm install -g @anthropic-ai/claude-code@2.1.286
